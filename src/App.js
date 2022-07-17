@@ -16,12 +16,22 @@ function App() {
     const action = { type: "toggle" };
     dispatch(action);
   };
+
+  const handleGlobalStateNegativeValue = (value) => {
+    if (value < 0) {
+      return "Negative";
+    } else {
+      return value;
+    }
+  };
   return (
     <div className="App">
       <h1>Hello Redux Basics</h1>
       {globalState.toggle && (
         <div>
-          <div className="counter">Counter:{globalState.value}</div>
+          <div className="counter">
+            Counter:{handleGlobalStateNegativeValue(globalState.value)}
+          </div>
           <div>
             <button className="btn" onClick={increase}>
               increase +
