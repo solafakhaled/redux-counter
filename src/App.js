@@ -1,8 +1,7 @@
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 function App() {
-  const state = useSelector((state) => state.value);
-  const toggleState = useSelector((state) => state.toggle);
+  const globalState = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const increase = () => {
@@ -20,9 +19,9 @@ function App() {
   return (
     <div className="App">
       <h1>Hello Redux Basics</h1>
-      {toggleState && (
+      {globalState.toggle && (
         <div>
-          <div className="counter">Counter:{state}</div>
+          <div className="counter">Counter:{globalState.value}</div>
           <div>
             <button className="btn" onClick={increase}>
               increase +
