@@ -3,18 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 function App() {
   const globalState = useSelector((state) => state);
   const dispatch = useDispatch();
-
-  const increase = () => {
-    const action = { type: "increase", payload: 1 };
-    dispatch(action);
-  };
-  const decrease = () => {
-    const action = { type: "decrease", payload: 1 };
-    dispatch(action);
+  const counterOperation = (type, payload) => {
+    dispatch({ type, payload });
   };
   const toggleCounter = () => {
-    const action = { type: "toggle" };
-    dispatch(action);
+    dispatch({ type: "toggle" });
   };
 
   const handleGlobalStateNegativeValue = (value) => {
@@ -33,10 +26,16 @@ function App() {
             Counter:{handleGlobalStateNegativeValue(globalState.value)}
           </div>
           <div>
-            <button className="btn" onClick={increase}>
+            <button
+              className="btn"
+              onClick={() => counterOperation("increase", 1)}
+            >
               increase +
             </button>
-            <button className="btn" onClick={decrease}>
+            <button
+              className="btn"
+              onClick={() => counterOperation("decrease", 1)}
+            >
               decrease -
             </button>
           </div>
