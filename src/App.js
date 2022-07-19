@@ -12,10 +12,8 @@ function App() {
   };
   const toggleCounter = (status) => {
     if (status) {
-      console.log(status);
       dispatch(toggleOn());
     } else {
-      console.log(status);
       dispatch(toggleOff());
     }
   };
