@@ -1,13 +1,23 @@
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
+import { counterAction } from "./Redux/CounterSlice";
+import { toggleAction } from "./Redux/ToggleSlice";
 function App() {
   const globalState = useSelector((state) => state);
   const dispatch = useDispatch();
-  const counterOperation = (type, payload) => {
-    dispatch({ type, payload });
+  const { increase, decrease } = counterAction;
+  const { toggleOff, toggleOn } = toggleAction;
+  const isToggleOn = () => {
+    return globalState.toggle.isToggleOn;
   };
-  const toggleCounter = () => {
-    dispatch({ type: "toggle" });
+  const toggleCounter = (status) => {
+    if (status) {
+      console.log(status);
+      dispatch(toggleOn());
+    } else {
+      console.log(status);
+      dispatch(toggleOff());
+    }
   };
 
   const handleGlobalStateNegativeValue = (value) => {
@@ -20,22 +30,16 @@ function App() {
   return (
     <div className="App">
       <h1>Hello Redux Basics</h1>
-      {globalState.toggle && (
+      {!isToggleOn() && (
         <div>
           <div className="counter">
-            Counter:{handleGlobalStateNegativeValue(globalState.value)}
+            Counter:{handleGlobalStateNegativeValue(globalState.counter.value)}
           </div>
           <div>
-            <button
-              className="btn"
-              onClick={() => counterOperation("increase", 1)}
-            >
+            <button className="btn" onClick={() => dispatch(increase())}>
               increase +
             </button>
-            <button
-              className="btn"
-              onClick={() => counterOperation("decrease", 1)}
-            >
+            <button className="btn" onClick={() => dispatch(decrease())}>
               decrease -
             </button>
           </div>
@@ -43,8 +47,8 @@ function App() {
       )}
 
       <div>
-        <button className="btn" onClick={toggleCounter}>
-          Hide/Show Counter Value
+        <button className="btn" onClick={() => toggleCounter(isToggleOn())}>
+          {isToggleOn() ? "Show" : "Hide"}
         </button>
       </div>
     </div>
